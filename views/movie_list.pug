@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h2 #{title}
+    ul
+        each movie, i in movies
+            li #{movie.title} 
+                legend released date 
+                    strong #{movie.released_date}
