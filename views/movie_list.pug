@@ -2,8 +2,8 @@ extends layout
 
 block content
     h2 #{title}
-    ul
+    ul.list-group
         each movie, i in movies
-            li 
+            li.list-group-item
                 h4 #{movie.movie_title} 
                 p Directed by: #{movie.director}
