@@ -2,3 +2,18 @@ extends layout
 
 block content
     h2= title
+    form(action="/movies/add_new_movie", method="post")
+        #form-group
+            label Title
+            input.form-control(type="text", name="movie_title")
+        #form-group
+            label Director
+            input.form-control(type="text", name="director")
+        #form-group
+            label Released Date
+            input.form-control(type="date", name="released_date")
+        #form-group
+            label Maintainer
+            input.form-control(type="text", name="admin_name")
+        br
+        input.btn.btn-primary(type="submit", value="Save Movie")
