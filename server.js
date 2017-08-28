@@ -33,6 +33,9 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// set public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // set the home route
 app.get('/', (req, res) => {
     res.render('index');
