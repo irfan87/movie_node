@@ -4,6 +4,9 @@ block content
     h2 #{title}
     ul
         each movie, i in movies
-            li #{movie.title} 
+            li #{movie.movie_title} 
                 legend released date 
                     strong #{movie.released_date}
+                legend Directed by: 
+                    strong #{movie.director}
+                small Maintained by: #{movie.admin_name}

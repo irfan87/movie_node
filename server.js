@@ -1,9 +1,27 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
+
+// connect to the database
+mongoose.connect('mongodb://localhost:27017/movie_node', {useMongoClient: true});
+let db = mongoose.connection;
+
+// check for db error
+db.on('error', (err) => {
+    console.log(err);
+});
+
+// check connection
+db.once('open', () => {
+    console.log('The app is connected to the mongodb');
+});
 
 // initialized app and port
 const app = express();
 const port = process.env.PORT || 3000;
+
+// bring the movies model
+let Movie = require('./models/movie');
 
 // set PUG engine
 app.set('views', path.join(__dirname, 'views'));
@@ -16,35 +34,15 @@ app.get('/', (req, res) => {
 
 // populate all the movies in here
 app.get('/movies/movies_list', (req, res) => {
-    let movies = [{
-        title: 'Movie 1',
-        directed_by: 'Director 1',
-        released_date: Date.now(),
-        created_at: Date.now(),
-        admin_name: 'Admin 1'
-    },{
-        title: 'Movie 2',
-        directed_by: 'Director 3',
-        released_date: Date.now(),
-        created_at: Date.now(),
-        admin_name: 'Admin 1'
-    },{
-        title: 'Movie 3',
-        directed_by: 'Director 2',
-        released_date: Date.now(),
-        created_at: Date.now(),
-        admin_name: 'Admin 2'
-    },{
-        title: 'Movie 4',
-        directed_by: 'Director 2',
-        released_date: Date.now(),
-        created_at: Date.now(),
-        admin_name: 'Admin 2'
-    }];
-
-    res.render('movie_list', {
-        title: "Movies List",
-        movies: movies
+    Movie.find({}, (err, movies) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.render('movie_list', {
+                title: "Movies List",
+                movies: movies
+            });
+        }
     });
 });
 
